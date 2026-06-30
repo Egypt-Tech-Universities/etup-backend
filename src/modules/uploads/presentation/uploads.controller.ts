@@ -111,4 +111,36 @@ export class UploadsController {
   async uploadPostImage(@UploadedFile() file: Express.Multer.File) {
     return this.uploadUC.execute(file, 'posts');
   }
+
+  @Post('university-gallery')
+  @ApiOperation({ summary: 'Upload image for university gallery (max 10MB)' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+          description: 'Gallery image (jpg, png, gif, webp)',
+        },
+      },
+    },
+  })
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: createStorage('universities/gallery'),
+      limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+      fileFilter: (req, file, cb) => {
+        if (file.mimetype.match(/^image\/(jpe?g|png|gif|webp)$/)) {
+          cb(null, true);
+        } else {
+          cb(new Error('Only image files are allowed'), false);
+        }
+      },
+    }),
+  )
+  async uploadUniversityGallery(@UploadedFile() file: Express.Multer.File) {
+    return this.uploadUC.execute(file, 'universities/gallery');
+  }
 }
