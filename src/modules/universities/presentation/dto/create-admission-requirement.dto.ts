@@ -1,8 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEnum, IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString, IsUUID, Min } from 'class-validator';
 import { AdmissionType } from '../../domain/entities/admission-requirement.entity';
 
 export class CreateAdmissionRequirementDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID('4')
+  id?: string;
+
   @ApiProperty({ enum: AdmissionType })
   @IsEnum(AdmissionType)
   type: AdmissionType;

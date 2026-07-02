@@ -1,7 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { IsInt, IsOptional, IsString, IsUUID, Min } from 'class-validator';
 
 export class CreateTuitionFeeDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID('4')
+  id?: string;
+
   @ApiProperty({ example: 'Year 1 & 2' })
   @IsString()
   yearRange: string;

@@ -4,6 +4,7 @@ import {
   IsArray,
   IsOptional,
   IsString,
+  IsUUID,
   IsUrl,
   MaxLength,
   ValidateNested,
@@ -11,6 +12,11 @@ import {
 import { CreateDepartmentDto } from './create-department.dto';
 
 export class CreateFacultyDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID('4')
+  id?: string;
+
   @ApiProperty({ example: 'Faculty of Industrial and Energy Technology' })
   @IsString()
   @MaxLength(255)
@@ -34,7 +40,7 @@ export class CreateFacultyDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   imageUrl?: string;
 
   @ApiPropertyOptional({ type: [CreateDepartmentDto] })

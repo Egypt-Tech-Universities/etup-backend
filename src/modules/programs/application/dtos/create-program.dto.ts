@@ -115,16 +115,13 @@ export class CreateProgramDto {
   @IsBoolean()
   isFeatured?: boolean;
 
-  // ============== Nested ==============
-  @ApiPropertyOptional({
-    type: [String],
-    description: 'University IDs to associate with this program',
-    example: ['uuid-1', 'uuid-2'],
+  // ============== Faculty Relation ==============
+  @ApiProperty({
+    description: 'Faculty ID this program belongs to',
+    example: 'uuid-1',
   })
-  @IsOptional()
-  @IsArray()
-  @IsUUID('4', { each: true })
-  universityIds?: string[];
+  @IsUUID('4')
+  facultyId: string;
 
   @ApiPropertyOptional({ type: [CreateHighlightDto] })
   @IsOptional()

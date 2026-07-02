@@ -6,6 +6,8 @@ import { UNIVERSITIES_SEED } from './universities.seed';
 import { seedAdmin } from './admin.seed';
 import { seedPrograms } from './programs.seed';
 import { seedIntents } from './intents.seed';
+import { seedSettings } from './settings.seed';
+import { seedUniversitiesExtras } from './universities-extras.seed';
 
 async function seed() {
   console.log('🚀 Starting full seeder...\n');
@@ -67,6 +69,18 @@ async function seed() {
     // ============================================
     console.log('🤖 Seeding Chatbot Intents...\n');
     await seedIntents(dataSource);
+
+    // ============================================
+    // 5) Seed Site Settings (Footer, Social, etc.)
+    // ============================================
+    console.log('⚙️  Seeding Site Settings...\n');
+    await seedSettings(dataSource);
+
+    // ============================================
+    // 6) Seed University Extras (Timeline, Campus Moments)
+    // ============================================
+    console.log('🏛️  Seeding University Extras...\n');
+    await seedUniversitiesExtras(dataSource);
 
     console.log('\n============================================');
     console.log('🎉 All seeders completed successfully!');

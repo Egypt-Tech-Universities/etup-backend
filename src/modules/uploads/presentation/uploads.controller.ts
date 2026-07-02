@@ -33,7 +33,7 @@ export class UploadsController {
   })
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: createStorage('avatars'),
+      storage: createStorage(),
       limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
       fileFilter: (req, file, cb) => {
         if (file.mimetype.match(/^image\/(jpe?g|png)$/)) {
@@ -65,7 +65,7 @@ export class UploadsController {
   })
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: createStorage('universities'),
+      storage: createStorage(),
       limits: { fileSize: 5 * 1024 * 1024 },
       fileFilter: (req, file, cb) => {
         if (file.mimetype.match(/^image\/(jpe?g|png)$/)) {
@@ -97,7 +97,7 @@ export class UploadsController {
   })
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: createStorage('posts'),
+      storage: createStorage(),
       limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
       fileFilter: (req, file, cb) => {
         if (file.mimetype.match(/^image\/(jpe?g|png|gif|webp)$/)) {
@@ -129,7 +129,7 @@ export class UploadsController {
   })
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: createStorage('universities/gallery'),
+      storage: createStorage(),
       limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
       fileFilter: (req, file, cb) => {
         if (file.mimetype.match(/^image\/(jpe?g|png|gif|webp)$/)) {
@@ -142,5 +142,37 @@ export class UploadsController {
   )
   async uploadUniversityGallery(@UploadedFile() file: Express.Multer.File) {
     return this.uploadUC.execute(file, 'universities/gallery');
+  }
+
+  @Post('leadership-image')
+  @ApiOperation({ summary: 'Upload leadership member image (max 5MB)' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+          description: 'Leadership image (jpg, png)',
+        },
+      },
+    },
+  })
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: createStorage(),
+      limits: { fileSize: 5 * 1024 * 1024 },
+      fileFilter: (req, file, cb) => {
+        if (file.mimetype.match(/^image\/(jpe?g|png)$/)) {
+          cb(null, true);
+        } else {
+          cb(new Error('Only JPG and PNG images are allowed'), false);
+        }
+      },
+    }),
+  )
+  async uploadLeadershipImage(@UploadedFile() file: Express.Multer.File) {
+    return this.uploadUC.execute(file, 'universities/leadership');
   }
 }

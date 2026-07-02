@@ -27,7 +27,7 @@ export class ListProgramsDto extends PaginationDto {
   @IsEnum(ProgramLanguage)
   language?: ProgramLanguage;
 
-  @ApiPropertyOptional({ description: 'Filter programs by university ID' })
+  @ApiPropertyOptional({ description: 'Filter programs by university ID (via faculty)' })
   @IsOptional()
   @IsUUID('4')
   universityId?: string;

@@ -14,8 +14,12 @@ import { UniversityImage } from './domain/entities/university-image.entity';
 import { AdmissionRequirement } from './domain/entities/admission-requirement.entity';
 import { TuitionFee } from './domain/entities/tuition-fee.entity';
 import { Scholarship } from './domain/entities/scholarship.entity';
+import { AdmissionTimeline } from './domain/entities/admission-timeline.entity';
+import { CampusMoment } from './domain/entities/campus-moment.entity';
 
 import { UniversitiesController } from './presentation/universities.controller';
+import { FacultiesController } from './presentation/faculties.controller';
+import { DepartmentsController } from './presentation/departments.controller';
 import { UniversityRepository } from './application/repositories/university.repository';
 import { TypeOrmUniversityRepository } from './infrastructure/repositories/typeorm-university.repository';
 
@@ -41,9 +45,11 @@ import { DeleteUniversityUseCase } from './application/use-cases/delete-universi
       AdmissionRequirement,
       TuitionFee,
       Scholarship,
+      AdmissionTimeline,
+      CampusMoment,
     ]),
   ],
-  controllers: [UniversitiesController],
+  controllers: [UniversitiesController, FacultiesController, DepartmentsController],
   providers: [
     {
       provide: UniversityRepository,

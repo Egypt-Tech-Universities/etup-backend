@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Program } from './domain/entities/program.entity';
 import { ProgramHighlight } from './domain/entities/program-highlight.entity';
 import { ProgramOutcome } from './domain/entities/program-outcome.entity';
-import { University } from '../universities/domain/entities/university.entity';
 
 import { ProgramsController } from './presentation/programs.controller';
 import { ProgramRepository } from './application/repositories/program.repository';
@@ -17,12 +16,10 @@ import { GetProgramBySlugUseCase } from './application/use-cases/get-program-by-
 import { GetProgramsByUniversityUseCase } from './application/use-cases/get-programs-by-university.use-case';
 import { UpdateProgramUseCase } from './application/use-cases/update-program.use-case';
 import { DeleteProgramUseCase } from './application/use-cases/delete-program.use-case';
-import { LinkUniversitiesUseCase } from './application/use-cases/link-universities.use-case';
-import { UnlinkUniversitiesUseCase } from './application/use-cases/unlink-universities.use-case';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Program, ProgramHighlight, ProgramOutcome, University]),
+    TypeOrmModule.forFeature([Program, ProgramHighlight, ProgramOutcome]),
   ],
   controllers: [ProgramsController],
   providers: [
@@ -34,8 +31,6 @@ import { UnlinkUniversitiesUseCase } from './application/use-cases/unlink-univer
     GetProgramsByUniversityUseCase,
     UpdateProgramUseCase,
     DeleteProgramUseCase,
-    LinkUniversitiesUseCase,
-    UnlinkUniversitiesUseCase,
   ],
   exports: [ProgramRepository],
 })

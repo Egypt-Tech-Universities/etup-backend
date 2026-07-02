@@ -16,6 +16,8 @@ import { UniversityImage } from './university-image.entity';
 import { AdmissionRequirement } from './admission-requirement.entity';
 import { TuitionFee } from './tuition-fee.entity';
 import { Scholarship } from './scholarship.entity';
+import { AdmissionTimeline } from './admission-timeline.entity';
+import { CampusMoment } from './campus-moment.entity';
 
 @Entity('universities')
 export class University {
@@ -81,11 +83,20 @@ export class University {
   @Column({ type: 'text', nullable: true })
   vision: string;
 
+  @Column({ type: 'text', nullable: true, name: 'vision_ar' })
+  visionAr: string;
+
   @Column({ type: 'text', nullable: true })
   mission: string;
 
+  @Column({ type: 'text', nullable: true, name: 'mission_ar' })
+  missionAr: string;
+
   @Column({ type: 'text', nullable: true, name: 'core_values' })
   coreValues: string;
+
+  @Column({ type: 'text', nullable: true, name: 'core_values_ar' })
+  coreValuesAr: string;
 
   // ============== Tuition Range (quick filter) ==============
   @Column({ type: 'int', nullable: true, name: 'tuition_min' })
@@ -97,6 +108,16 @@ export class University {
   // ============== Application Link ==============
   @Column({ type: 'varchar', length: 500, nullable: true, name: 'application_link' })
   applicationLink: string;
+
+  // ============== Stats ==============
+  @Column({ type: 'int', default: 0, name: 'total_students' })
+  totalStudents: number;
+
+  @Column({ type: 'int', default: 0, name: 'total_faculty' })
+  totalFaculty: number;
+
+  @Column({ type: 'int', default: 0, name: 'total_programs' })
+  totalPrograms: number;
 
   // ============== Status ==============
   @Column({ type: 'boolean', default: true, name: 'is_active' })
@@ -140,4 +161,10 @@ export class University {
 
   @OneToMany(() => Scholarship, (sch) => sch.university, { cascade: true })
   scholarships: Scholarship[];
+
+  @OneToMany(() => AdmissionTimeline, (t) => t.university, { cascade: true })
+  admissionTimelines: AdmissionTimeline[];
+
+  @OneToMany(() => CampusMoment, (m) => m.university, { cascade: true })
+  campusMoments: CampusMoment[];
 }

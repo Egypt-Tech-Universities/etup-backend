@@ -1,7 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
 
 export class CreateSpecializationDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID('4')
+  id?: string;
+
   @ApiProperty({ example: 'Networks & Cybersecurity' })
   @IsString()
   @MaxLength(255)

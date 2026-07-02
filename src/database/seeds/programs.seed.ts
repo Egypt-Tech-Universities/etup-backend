@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { Program } from '../../modules/programs/domain/entities/program.entity';
-import { University } from '../../modules/universities/domain/entities/university.entity';
+import { Faculty } from '../../modules/universities/domain/entities/faculty.entity';
 import { ProgramCategory } from '../../modules/programs/domain/enums/program-category.enum';
 import { DegreeLevel } from '../../modules/programs/domain/enums/degree-level.enum';
 import { ProgramLanguage } from '../../modules/programs/domain/enums/program-language.enum';
@@ -21,8 +21,7 @@ interface ProgramSeedData {
   avgSalaryMin: number;
   avgSalaryMax: number;
   isFeatured: boolean;
-  // Match universities by abbreviation
-  universityAbbreviations: string[];
+  facultyName: string;
   highlights: { title: string; titleAr: string; icon: string; description?: string }[];
   outcomes: { outcome: string; outcomeAr: string }[];
 }
@@ -45,7 +44,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 8000,
     avgSalaryMax: 25000,
     isFeatured: true,
-    universityAbbreviations: ['NCTU', 'OTU', 'BTU'],
+    facultyName: 'Faculty of Industrial and Energy Technology',
     highlights: [
       { title: 'Hands-on Lab Training', titleAr: 'تدريب عملي بالمعامل', icon: '🔬' },
       { title: 'Industry Partnerships', titleAr: 'شراكات مع الصناعة', icon: '🤝' },
@@ -77,7 +76,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 7000,
     avgSalaryMax: 22000,
     isFeatured: true,
-    universityAbbreviations: ['NCTU', 'BATU'],
+    facultyName: 'Faculty of Industrial and Energy Technology',
     highlights: [
       { title: 'Modern Robotics Lab', titleAr: 'معمل روبوتات حديث', icon: '🤖' },
       { title: 'PLC & SCADA Training', titleAr: 'تدريب PLC و SCADA', icon: '⚙️' },
@@ -108,7 +107,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 7500,
     avgSalaryMax: 20000,
     isFeatured: true,
-    universityAbbreviations: ['NCTU', 'OTU'],
+    facultyName: 'Faculty of Industrial and Energy Technology',
     highlights: [
       { title: 'Electric Vehicle Lab', titleAr: 'معمل السيارات الكهربائية', icon: '🔋' },
       { title: 'OBD-II Diagnostics', titleAr: 'تشخيص OBD-II', icon: '🔧' },
@@ -137,7 +136,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 9000,
     avgSalaryMax: 24000,
     isFeatured: true,
-    universityAbbreviations: ['NCTU', 'ATU'],
+    facultyName: 'Faculty of Industrial and Energy Technology',
     highlights: [
       { title: 'Solar PV Installation Lab', titleAr: 'معمل تركيب الطاقة الشمسية', icon: '☀️' },
       { title: 'Wind Energy Simulator', titleAr: 'محاكاة طاقة الرياح', icon: '💨' },
@@ -167,7 +166,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 12000,
     avgSalaryMax: 35000,
     isFeatured: false,
-    universityAbbreviations: ['NCTU', 'ZTU'],
+    facultyName: 'Faculty of Industrial and Energy Technology',
     highlights: [
       { title: 'Drilling Simulator', titleAr: 'محاكي الحفر', icon: '🛢️' },
       { title: 'Reservoir Modeling Lab', titleAr: 'معمل نمذجة الخزانات', icon: '⚙️' },
@@ -196,7 +195,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 8000,
     avgSalaryMax: 22000,
     isFeatured: true,
-    universityAbbreviations: ['NCTU'],
+    facultyName: 'Faculty of Applied Health Sciences Technology',
     highlights: [
       { title: '3D Printing Lab', titleAr: 'معمل الطباعة ثلاثية الأبعاد', icon: '🖨️' },
       { title: 'Biomechanics Lab', titleAr: 'معمل الميكانيكا الحيوية', icon: '🦾' },
@@ -225,7 +224,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 6000,
     avgSalaryMax: 18000,
     isFeatured: false,
-    universityAbbreviations: ['DTU'],
+    facultyName: 'Faculty of Textile Technologies',
     highlights: [
       { title: 'Modern Textile Looms', titleAr: 'أنوال نسيج حديثة', icon: '🧵' },
       { title: 'Dyeing & Finishing Lab', titleAr: 'معمل الصباغة والتشطيب', icon: '🎨' },
@@ -253,7 +252,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 8000,
     avgSalaryMax: 22000,
     isFeatured: false,
-    universityAbbreviations: ['BATU', 'STU', 'ECTU'],
+    facultyName: 'Faculty of Maritime Logistics & Trade Technology',
     highlights: [
       { title: 'Port Simulation Lab', titleAr: 'معمل محاكاة الموانئ', icon: '🚢' },
       { title: 'Suez Canal Authority Partnership', titleAr: 'شراكة مع هيئة قناة السويس', icon: '🤝' },
@@ -281,7 +280,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 7000,
     avgSalaryMax: 20000,
     isFeatured: false,
-    universityAbbreviations: ['ATU'],
+    facultyName: 'Faculty of Construction & Building Materials',
     highlights: [
       { title: 'Concrete Testing Lab', titleAr: 'معمل اختبار الخرسانة', icon: '🏗️' },
       { title: 'BIM & AutoCAD Training', titleAr: 'تدريب BIM و AutoCAD', icon: '📐' },
@@ -309,7 +308,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 6000,
     avgSalaryMax: 25000,
     isFeatured: false,
-    universityAbbreviations: ['ShTU', 'SVTU'],
+    facultyName: 'Faculty of Hospitality & Tourism Technology',
     highlights: [
       { title: 'Training Hotel On-Campus', titleAr: 'فندق تدريبي بالحرم', icon: '🏨' },
       { title: 'Foreign Languages Required', titleAr: 'لغات أجنبية مطلوبة', icon: '🌍' },
@@ -337,7 +336,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 5500,
     avgSalaryMax: 18000,
     isFeatured: true,
-    universityAbbreviations: ['SVTU'],
+    facultyName: 'Faculty of Heritage Restoration & Antiquities Technology',
     highlights: [
       { title: 'Hands-on at Luxor Sites', titleAr: 'تدريب عملي بمواقع الأقصر', icon: '🏛️' },
       { title: '3D Scanning Lab', titleAr: 'معمل المسح ثلاثي الأبعاد', icon: '📸' },
@@ -366,7 +365,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 6000,
     avgSalaryMax: 18000,
     isFeatured: false,
-    universityAbbreviations: ['KSTU'],
+    facultyName: 'Faculty of Aquaculture & Fisheries Processing',
     highlights: [
       { title: 'Modern RAS Systems', titleAr: 'أنظمة استزراع حديثة RAS', icon: '♻️' },
       { title: 'Research Hatchery', titleAr: 'مفرخ بحثي', icon: '🐠' },
@@ -394,7 +393,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 6500,
     avgSalaryMax: 16000,
     isFeatured: false,
-    universityAbbreviations: ['QTU'],
+    facultyName: 'Faculty of Sugar & Agro-Industry Technology',
     highlights: [
       { title: 'Pilot Sugar Plant', titleAr: 'مصنع سكر تجريبي', icon: '🏭' },
       { title: 'Sugar Factories Partnership', titleAr: 'شراكة مع مصانع السكر', icon: '🤝' },
@@ -422,7 +421,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 6000,
     avgSalaryMax: 17000,
     isFeatured: false,
-    universityAbbreviations: ['MTU'],
+    facultyName: 'Faculty of Ceramics & Construction Materials',
     highlights: [
       { title: 'Modern Kilns Lab', titleAr: 'معمل أفران حديثة', icon: '🔥' },
       { title: 'Glazing & Decoration Studio', titleAr: 'استوديو التزجيج والديكور', icon: '🎨' },
@@ -450,7 +449,7 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
     avgSalaryMin: 5000,
     avgSalaryMax: 12000,
     isFeatured: false,
-    universityAbbreviations: ['NCTU', 'OTU'],
+    facultyName: 'Faculty of Industrial and Energy Technology',
     highlights: [
       { title: 'Fast-track to Career', titleAr: 'مسار سريع للعمل', icon: '⚡' },
       { title: 'Industry Certifications', titleAr: 'شهادات صناعية', icon: '🏆' },
@@ -464,42 +463,40 @@ export const PROGRAMS_SEED: ProgramSeedData[] = [
 
 export async function seedPrograms(dataSource: DataSource): Promise<void> {
   const programRepo = dataSource.getRepository(Program);
-  const uniRepo = dataSource.getRepository(University);
+  const facultyRepo = dataSource.getRepository(Faculty);
 
   console.log('🗑️  Clearing existing programs...');
-  await dataSource.query('TRUNCATE TABLE "university_programs" CASCADE');
   await dataSource.query('TRUNCATE TABLE "program_highlights" CASCADE');
   await dataSource.query('TRUNCATE TABLE "program_outcomes" CASCADE');
   await dataSource.query('TRUNCATE TABLE "programs" CASCADE');
 
   console.log(`\n🌱 Seeding ${PROGRAMS_SEED.length} programs...\n`);
 
-  // Build a map of abbreviations → university entities
-  const allUnis = await uniRepo.find();
-  const uniMap = new Map<string, University>();
-  allUnis.forEach((u) => {
-    if (u.abbreviation) uniMap.set(u.abbreviation, u);
-  });
+  // Build a map of faculty names → Faculty entities
+  const allFaculties = await facultyRepo.find();
+  const facultyMap = new Map<string, Faculty>();
+  allFaculties.forEach((f) => facultyMap.set(f.name, f));
 
   for (let i = 0; i < PROGRAMS_SEED.length; i++) {
     const data = PROGRAMS_SEED[i];
-    const { universityAbbreviations, ...rest } = data;
+    const { facultyName, ...rest } = data;
 
-    // Resolve universities
-    const universities = universityAbbreviations
-      .map((abbr) => uniMap.get(abbr))
-      .filter((u): u is University => u !== undefined);
+    const faculty = facultyMap.get(facultyName);
+    if (!faculty) {
+      console.warn(`   ⚠️  Faculty "${facultyName}" not found, skipping`);
+      continue;
+    }
 
     const program = programRepo.create({
       ...rest,
-      universities,
+      facultyId: faculty.id,
     } as any);
 
     const saved = await programRepo.save(program);
     const result: any = Array.isArray(saved) ? saved[0] : saved;
 
     console.log(`${i + 1}/${PROGRAMS_SEED.length} ✅ ${data.name}`);
-    console.log(`   Universities: ${universities.map((u) => u.abbreviation).join(', ')}`);
+    console.log(`   Faculty: ${facultyName}`);
     console.log(`   ID: ${result.id}\n`);
   }
 

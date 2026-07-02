@@ -9,8 +9,7 @@ export class UploadFileUseCase {
   async execute(
     file: Express.Multer.File,
     folder: string = '',
-  ): Promise<{ url: string }> {
-    const url = await this.fileService.uploadFile(file, folder);
-    return { url };
+  ): Promise<{ url: string; key: string }> {
+    return this.fileService.uploadFile(file, folder);
   }
 }

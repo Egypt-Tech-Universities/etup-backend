@@ -3,8 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   Index,
-  JoinTable,
-  ManyToMany,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -12,7 +12,7 @@ import {
 import { ProgramCategory } from '../enums/program-category.enum';
 import { DegreeLevel } from '../enums/degree-level.enum';
 import { ProgramLanguage } from '../enums/program-language.enum';
-import { University } from '../../../universities/domain/entities/university.entity';
+import { Faculty } from '../../../universities/domain/entities/faculty.entity';
 import { ProgramHighlight } from './program-highlight.entity';
 import { ProgramOutcome } from './program-outcome.entity';
 
@@ -31,10 +31,10 @@ export class Program {
 
   @Index({ unique: true })
   @Column({ type: 'varchar', length: 255 })
-  slug: string; // URL-friendly: information-technology
+  slug: string;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  icon: string; // emoji
+  icon: string;
 
   @Column({ type: 'text' })
   description: string;
@@ -55,7 +55,7 @@ export class Program {
 
   // ============== Duration ==============
   @Column({ type: 'int', name: 'duration_years' })
-  durationYears: number; // 2, 4, 5
+  durationYears: number;
 
   @Column({ type: 'int', nullable: true, name: 'total_credits' })
   totalCredits: number;
@@ -69,13 +69,13 @@ export class Program {
 
   // ============== Career & Stats ==============
   @Column({ type: 'text', nullable: true, name: 'career_paths' })
-  careerPaths: string; // مسارات وظيفية مختصرة
+  careerPaths: string;
 
   @Column({ type: 'int', nullable: true, name: 'avg_salary_min' })
-  avgSalaryMin: number; // EGP
+  avgSalaryMin: number;
 
   @Column({ type: 'int', nullable: true, name: 'avg_salary_max' })
-  avgSalaryMax: number; // EGP
+  avgSalaryMax: number;
 
   // ============== Status ==============
   @Column({ type: 'boolean', default: true, name: 'is_active' })
@@ -92,13 +92,12 @@ export class Program {
   updatedAt: Date;
 
   // ============== Relations ==============
-  @ManyToMany(() => University, { cascade: false })
-  @JoinTable({
-    name: 'university_programs',
-    joinColumn: { name: 'program_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'university_id', referencedColumnName: 'id' },
-  })
-  universities: University[];
+  @ManyToOne(() => Faculty, (faculty) => faculty.programs, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'faculty_id' })
+  faculty: Faculty;
+
+  @Column({ name: 'faculty_id', nullable: true })
+  facultyId: string;
 
   @OneToMany(() => ProgramHighlight, (h) => h.program, { cascade: true })
   highlights: ProgramHighlight[];

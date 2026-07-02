@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, In, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Program } from '../../domain/entities/program.entity';
 import { ProgramRepository } from '../../application/repositories/program.repository';
 import { CreateProgramDto } from '../../application/dtos/create-program.dto';
 import { UpdateProgramDto } from '../../application/dtos/update-program.dto';
 import { ListProgramsDto } from '../../application/dtos/list-programs.dto';
-import { University } from '../../../universities/domain/entities/university.entity';
 import { getSkip } from '../../../../shared/utils/pagination.util';
 
 @Injectable()
@@ -14,24 +13,14 @@ export class TypeOrmProgramRepository extends ProgramRepository {
   constructor(
     @InjectRepository(Program)
     private readonly repo: Repository<Program>,
-    @InjectRepository(University)
-    private readonly uniRepo: Repository<University>,
   ) {
     super();
   }
 
   async create(dto: CreateProgramDto): Promise<Program> {
-    const { universityIds, ...rest } = dto;
+    const { highlights, outcomes, ...rest } = dto;
 
     const program = this.repo.create(rest as any);
-
-    // Attach universities if provided
-    if (universityIds && universityIds.length > 0) {
-      const universities = await this.uniRepo.find({
-        where: { id: In(universityIds) },
-      });
-      (program as any).universities = universities;
-    }
 
     const saved = await this.repo.save(program);
     return Array.isArray(saved) ? saved[0] : saved;
@@ -44,7 +33,7 @@ export class TypeOrmProgramRepository extends ProgramRepository {
 
     const qb = this.repo
       .createQueryBuilder('program')
-      .leftJoinAndSelect('program.universities', 'university')
+      .leftJoinAndSelect('program.faculty', 'faculty')
       .where('program.isActive = :isActive', { isActive: true });
 
     if (query.search) {
@@ -56,7 +45,7 @@ export class TypeOrmProgramRepository extends ProgramRepository {
     if (query.isFeatured) qb.andWhere('program.isFeatured = :ft', { ft: query.isFeatured });
 
     if (query.universityId) {
-      qb.andWhere('university.id = :uniId', { uniId: query.universityId });
+      qb.andWhere('faculty.universityId = :uniId', { uniId: query.universityId });
     }
 
     qb.orderBy('program.isFeatured', 'DESC')
@@ -72,7 +61,7 @@ export class TypeOrmProgramRepository extends ProgramRepository {
     return this.repo.findOne({
       where: { id },
       relations: {
-        universities: true,
+        faculty: true,
         highlights: true,
         outcomes: true,
       },
@@ -83,7 +72,7 @@ export class TypeOrmProgramRepository extends ProgramRepository {
     return this.repo.findOne({
       where: { slug },
       relations: {
-        universities: true,
+        faculty: true,
         highlights: true,
         outcomes: true,
       },
@@ -91,23 +80,9 @@ export class TypeOrmProgramRepository extends ProgramRepository {
   }
 
   async update(id: string, dto: UpdateProgramDto): Promise<Program> {
-    const { universityIds, highlights, outcomes, ...rest } = dto;
+    const { highlights, outcomes, ...rest } = dto;
 
     await this.repo.update(id, rest as any);
-
-    if (universityIds !== undefined) {
-      const program = await this.repo.findOne({
-        where: { id },
-        relations: { universities: true },
-      });
-      if (program) {
-        const universities = await this.uniRepo.find({
-          where: { id: In(universityIds) },
-        });
-        program.universities = universities;
-        await this.repo.save(program);
-      }
-    }
 
     return (await this.findById(id))!;
   }
@@ -121,45 +96,13 @@ export class TypeOrmProgramRepository extends ProgramRepository {
     return count > 0;
   }
 
-  async linkUniversities(programId: string, universityIds: string[]): Promise<Program> {
-    const program = await this.repo.findOne({
-      where: { id: programId },
-      relations: { universities: true },
-    });
-    if (!program) throw new Error('Program not found');
-
-    const newUnis = await this.uniRepo.find({ where: { id: In(universityIds) } });
-    const existingIds = program.universities.map((u) => u.id);
-    const toAdd = newUnis.filter((u) => !existingIds.includes(u.id));
-
-    program.universities = [...program.universities, ...toAdd];
-    await this.repo.save(program);
-
-    return (await this.findById(programId))!;
-  }
-
-  async unlinkUniversities(programId: string, universityIds: string[]): Promise<Program> {
-    const program = await this.repo.findOne({
-      where: { id: programId },
-      relations: { universities: true },
-    });
-    if (!program) throw new Error('Program not found');
-
-    program.universities = program.universities.filter(
-      (u) => !universityIds.includes(u.id),
-    );
-    await this.repo.save(program);
-
-    return (await this.findById(programId))!;
-  }
-
   async findByUniversityId(universityId: string): Promise<Program[]> {
     return this.repo
       .createQueryBuilder('program')
-      .leftJoinAndSelect('program.universities', 'university')
+      .leftJoinAndSelect('program.faculty', 'faculty')
       .leftJoinAndSelect('program.highlights', 'highlights')
       .leftJoinAndSelect('program.outcomes', 'outcomes')
-      .where('university.id = :uniId', { uniId: universityId })
+      .where('faculty.universityId = :uniId', { uniId: universityId })
       .andWhere('program.isActive = :isActive', { isActive: true })
       .orderBy('program.isFeatured', 'DESC')
       .getMany();

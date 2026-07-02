@@ -1,8 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEnum, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsEnum, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
 import { ContactType } from '../../domain/entities/contact.entity';
 
 export class CreateContactDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID('4')
+  id?: string;
+
   @ApiProperty({ enum: ContactType, example: ContactType.PHONE })
   @IsEnum(ContactType)
   type: ContactType;

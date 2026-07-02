@@ -11,6 +11,7 @@ export const getDatabaseConfig = (
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_NAME'),
   autoLoadEntities: true,
-  synchronize: true, // ⚠️ Development only
-  logging: true,
+  synchronize: configService.get<string>('NODE_ENV') !== 'production',
+  logging: configService.get<string>('NODE_ENV') !== 'production' ? ['error', 'warn'] : ['error'],
+  maxQueryExecutionTime: 1000,
 });

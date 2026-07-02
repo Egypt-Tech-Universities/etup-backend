@@ -7,7 +7,7 @@ export class UpdateUniversityUseCase {
   constructor(private readonly repo: UniversityRepository) {}
 
   async execute(id: string, dto: UpdateUniversityDto) {
-    const exists = await this.repo.findById(id);
+    const exists = await this.repo.existsById(id);
     if (!exists) {
       throw new NotFoundException(`University with id ${id} not found`);
     }

@@ -6,33 +6,39 @@ import { IFileService } from '../../application/services/file.service.interface'
 
 @Injectable()
 export class LocalFileService extends IFileService {
-  private readonly baseUrl = process.env.UPLOAD_URL || 'http://localhost:3000';
+  private readonly baseUrl = process.env.UPLOAD_URL || 'http://localhost:8000';
+  private readonly uploadDir = path.join(process.cwd(), 'uploads');
 
-  async uploadFile(file: Express.Multer.File, folder: string = ''): Promise<string> {
-    // Multer حفظ الملف تلقائيًا في المكان المحدد
-    // فقط نحول المسار لـ URL
-    
-    const relativePath = file.path
-      .replace(process.cwd(), '')
-      .replace(/\\/g, '/') // Windows paths
-      .replace(/^\//, ''); // Remove leading slash
-    
-    return `${this.baseUrl}/${relativePath}`;
+  async uploadFile(
+    file: Express.Multer.File,
+    folder: string = '',
+  ): Promise<{ url: string; key: string }> {
+    const subDir = folder ? path.join(this.uploadDir, folder) : this.uploadDir;
+    if (!fs.existsSync(subDir)) {
+      fs.mkdirSync(subDir, { recursive: true });
+    }
+
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    const filename = `${uniqueSuffix}${ext}`;
+    const relativePath = folder ? `${folder}/${filename}` : filename;
+    const absolutePath = path.join(this.uploadDir, relativePath);
+
+    fs.writeFileSync(absolutePath, file.buffer);
+
+    const url = `${this.baseUrl}/uploads/${relativePath.replace(/\\/g, '/')}`;
+    return { url, key: relativePath.replace(/\\/g, '/') };
   }
 
-  async deleteFile(filePath: string): Promise<boolean> {
+  async deleteFile(key: string): Promise<boolean> {
     try {
-      const url = new URL(filePath);
-      const relativePath = url.pathname.substring(1);
-      const absolutePath = path.join(process.cwd(), relativePath);
-      
+      const absolutePath = path.join(this.uploadDir, key);
       if (fs.existsSync(absolutePath)) {
         fs.unlinkSync(absolutePath);
         return true;
       }
       return false;
-    } catch (error) {
-      console.error('Error deleting file:', error);
+    } catch {
       return false;
     }
   }

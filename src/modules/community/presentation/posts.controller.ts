@@ -96,7 +96,7 @@ export class PostsController {
   })
   @UseInterceptors(
     FilesInterceptor('files', 5, {
-      storage: createStorage('posts'),
+      storage: createStorage(),
       limits: { fileSize: 10 * 1024 * 1024 },
       fileFilter: (req, file, cb) => {
         if (file.mimetype.match(/^image\/(jpe?g|png|gif|webp)$/)) {

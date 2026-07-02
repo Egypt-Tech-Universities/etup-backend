@@ -21,7 +21,6 @@ import {
 import { CreateProgramDto } from '../application/dtos/create-program.dto';
 import { UpdateProgramDto } from '../application/dtos/update-program.dto';
 import { ListProgramsDto } from '../application/dtos/list-programs.dto';
-import { LinkUniversitiesDto } from '../application/dtos/link-universities.dto';
 import { CreateProgramUseCase } from '../application/use-cases/create-program.use-case';
 import { ListProgramsUseCase } from '../application/use-cases/list-programs.use-case';
 import { GetProgramByIdUseCase } from '../application/use-cases/get-program-by-id.use-case';
@@ -29,8 +28,6 @@ import { GetProgramBySlugUseCase } from '../application/use-cases/get-program-by
 import { GetProgramsByUniversityUseCase } from '../application/use-cases/get-programs-by-university.use-case';
 import { UpdateProgramUseCase } from '../application/use-cases/update-program.use-case';
 import { DeleteProgramUseCase } from '../application/use-cases/delete-program.use-case';
-import { LinkUniversitiesUseCase } from '../application/use-cases/link-universities.use-case';
-import { UnlinkUniversitiesUseCase } from '../application/use-cases/unlink-universities.use-case';
 import { Public } from '../../../shared/decorators/public.decorator';
 import { Roles } from '../../../shared/decorators/roles.decorator';
 import { RolesGuard } from '../../../shared/guards/roles.guard';
@@ -47,8 +44,6 @@ export class ProgramsController {
     private readonly getByUniUC: GetProgramsByUniversityUseCase,
     private readonly updateUC: UpdateProgramUseCase,
     private readonly deleteUC: DeleteProgramUseCase,
-    private readonly linkUC: LinkUniversitiesUseCase,
-    private readonly unlinkUC: UnlinkUniversitiesUseCase,
   ) {}
 
   @Post()
@@ -118,29 +113,5 @@ export class ProgramsController {
   @ApiOperation({ summary: 'Delete a program (Admin only)' })
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.deleteUC.execute(id);
-  }
-
-  @Post(':id/universities')
-  @ApiBearerAuth()
-  @UseGuards(RolesGuard)
-  @Roles(UserRole.ADMIN)
-  @ApiOperation({ summary: 'Link universities to a program (Admin only)' })
-  linkUniversities(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: LinkUniversitiesDto,
-  ) {
-    return this.linkUC.execute(id, dto.universityIds);
-  }
-
-  @Delete(':id/universities')
-  @ApiBearerAuth()
-  @UseGuards(RolesGuard)
-  @Roles(UserRole.ADMIN)
-  @ApiOperation({ summary: 'Unlink universities from a program (Admin only)' })
-  unlinkUniversities(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: LinkUniversitiesDto,
-  ) {
-    return this.unlinkUC.execute(id, dto.universityIds);
   }
 }

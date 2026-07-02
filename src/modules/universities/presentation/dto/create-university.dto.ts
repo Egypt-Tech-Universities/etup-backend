@@ -97,17 +97,17 @@ export class CreateUniversityDto {
 
   @ApiPropertyOptional({ example: 'https://nctu.edu.eg' })
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   website?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   logoUrl?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   coverImageUrl?: string;
 
   // ============== Vision / Mission ==============
@@ -119,12 +119,27 @@ export class CreateUniversityDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
+  visionAr?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
   mission?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
+  missionAr?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
   coreValues?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  coreValuesAr?: string;
 
   // ============== Tuition ==============
   @ApiPropertyOptional({ example: 15000 })
@@ -141,7 +156,7 @@ export class CreateUniversityDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   applicationLink?: string;
 
   // ============== Nested Relations ==============

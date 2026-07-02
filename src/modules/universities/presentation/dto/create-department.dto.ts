@@ -4,6 +4,7 @@ import {
   IsArray,
   IsOptional,
   IsString,
+  IsUUID,
   MaxLength,
   ValidateNested,
 } from 'class-validator';
@@ -11,6 +12,11 @@ import { CreateSpecializationDto } from './create-specialization.dto';
 import { CreateCareerOpportunityDto } from './create-career-opportunity.dto';
 
 export class CreateDepartmentDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID('4')
+  id?: string;
+
   @ApiProperty({ example: 'Information Technology' })
   @IsString()
   @MaxLength(255)

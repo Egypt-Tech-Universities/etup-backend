@@ -1,8 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
 import { DayOfWeek } from '../../../../shared/enums/day-of-week.enum';
 
 export class CreateWorkingHourDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID('4')
+  id?: string;
+
   @ApiProperty({ enum: DayOfWeek, example: DayOfWeek.SUNDAY })
   @IsEnum(DayOfWeek)
   day: DayOfWeek;

@@ -3,12 +3,18 @@ import {
   IsInt,
   IsOptional,
   IsString,
+  IsUUID,
   IsUrl,
   MaxLength,
   Min,
 } from 'class-validator';
 
 export class CreateLeadershipDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID('4')
+  id?: string;
+
   @ApiProperty({ example: 'Prof. Dr. Tarek Abdel Malek' })
   @IsString()
   @MaxLength(255)
@@ -33,7 +39,7 @@ export class CreateLeadershipDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   imageUrl?: string;
 
   @ApiPropertyOptional({ default: 0 })

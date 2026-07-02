@@ -37,6 +37,9 @@ export const UNIVERSITIES_SEED = [
     tuitionMin: 15000,
     tuitionMax: 20000,
     applicationLink: 'https://nctu.edu.eg/admission',
+    totalStudents: 3200,
+    totalFaculty: 180,
+    totalPrograms: 24,
     
     faculties: [
       // Faculty 1: Industrial & Energy
@@ -280,6 +283,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://dtu.edu.eg/logo.png',
     tuitionMin: 14000,
     tuitionMax: 19000,
+    totalStudents: 1800,
+    totalFaculty: 95,
+    totalPrograms: 12,
     
     faculties: [
       {
@@ -384,6 +390,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://batu.edu.eg/logo.png',
     tuitionMin: 16000,
     tuitionMax: 22000,
+    totalStudents: 2100,
+    totalFaculty: 110,
+    totalPrograms: 14,
     
     faculties: [
       {
@@ -493,6 +502,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://stu.edu.eg/logo.png',
     tuitionMin: 13000,
     tuitionMax: 18000,
+    totalStudents: 1500,
+    totalFaculty: 80,
+    totalPrograms: 10,
     
     faculties: [
       {
@@ -578,6 +590,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://ztu.edu.eg/logo.png',
     tuitionMin: 15000,
     tuitionMax: 21000,
+    totalStudents: 1600,
+    totalFaculty: 85,
+    totalPrograms: 11,
     
     faculties: [
       {
@@ -676,6 +691,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://atu.edu.eg/logo.png',
     tuitionMin: 12000,
     tuitionMax: 17000,
+    totalStudents: 2200,
+    totalFaculty: 120,
+    totalPrograms: 16,
     
     faculties: [
       {
@@ -788,6 +806,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://shtu.edu.eg/logo.png',
     tuitionMin: 11500,
     tuitionMax: 16500,
+    totalStudents: 1200,
+    totalFaculty: 65,
+    totalPrograms: 9,
     
     faculties: [
       {
@@ -895,6 +916,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://qtu.edu.eg/logo.png',
     tuitionMin: 11000,
     tuitionMax: 16000,
+    totalStudents: 1400,
+    totalFaculty: 75,
+    totalPrograms: 10,
     
     faculties: [
       {
@@ -984,6 +1008,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://otu.edu.eg/logo.png',
     tuitionMin: 15500,
     tuitionMax: 21000,
+    totalStudents: 1900,
+    totalFaculty: 100,
+    totalPrograms: 13,
     
     faculties: [
       {
@@ -1101,6 +1128,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://ectu.edu.eg/logo.png',
     tuitionMin: 13500,
     tuitionMax: 18500,
+    totalStudents: 1700,
+    totalFaculty: 90,
+    totalPrograms: 12,
     
     faculties: [
       {
@@ -1178,6 +1208,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://mtu.edu.eg/logo.png',
     tuitionMin: 11800,
     tuitionMax: 16800,
+    totalStudents: 1300,
+    totalFaculty: 70,
+    totalPrograms: 9,
     
     faculties: [
       {
@@ -1280,6 +1313,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://svtu.edu.eg/logo.png',
     tuitionMin: 10500,
     tuitionMax: 15500,
+    totalStudents: 1100,
+    totalFaculty: 60,
+    totalPrograms: 8,
     
     faculties: [
       {
@@ -1384,6 +1420,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://btu.edu.eg/logo.png',
     tuitionMin: 14500,
     tuitionMax: 19500,
+    totalStudents: 2000,
+    totalFaculty: 105,
+    totalPrograms: 14,
     
     faculties: [
       {
@@ -1465,6 +1504,9 @@ export const UNIVERSITIES_SEED = [
     logoUrl: 'https://kstu.edu.eg/logo.png',
     tuitionMin: 11200,
     tuitionMax: 16200,
+    totalStudents: 1000,
+    totalFaculty: 55,
+    totalPrograms: 7,
     
     faculties: [
       {

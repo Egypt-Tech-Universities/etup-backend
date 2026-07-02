@@ -71,19 +71,19 @@ export class CreateNewsDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   coverImage?: string;
 
   @ApiPropertyOptional({ type: [String] })
   @IsOptional()
   @IsArray()
   @ArrayMaxSize(10)
-  @IsUrl({}, { each: true })
+  @IsUrl({ require_tld: false }, { each: true })
   gallery?: string[];
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   videoUrl?: string;
 
   @ApiPropertyOptional({ enum: NewsStatus, default: NewsStatus.DRAFT })

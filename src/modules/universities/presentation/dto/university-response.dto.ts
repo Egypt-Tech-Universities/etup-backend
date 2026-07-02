@@ -2,34 +2,31 @@ export class UniversityResponseDto {
   id: string;
   name: string;
   nameAr: string;
+  abbreviation: string;
   logo: string;
+  coverImage: string;
   region: string;
   location: {
     governorate: string;
     city: string;
+    address: string;
     coordinates: { lat: number; lng: number };
   };
-  president: {
-    name: string;
-    image: string;
-    bio: string;
-  };
-  stats: {
-    students: number;
-    faculty: number;
-    programs: number;
-    accreditation: string[];
-  };
-  degreeTypes: string[];
-  facilities: string[];
-  tuitionRange: {
-    min: number;
-    max: number;
-  };
-  programs: string[];
-  industryPartners: string[];
   description: string;
-  gallery: string[];
+  descriptionAr: string;
   established: number;
+  type: string;
   website: string;
+  vision: string;
+  visionAr: string;
+  mission: string;
+  missionAr: string;
+  coreValues: string;
+  coreValuesAr: string;
+  tuitionMin: number;
+  tuitionMax: number;
+  applicationLink: string;
+  totalStudents: number;
+  totalFaculty: number;
+  totalPrograms: number;
 }

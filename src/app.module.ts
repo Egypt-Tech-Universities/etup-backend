@@ -16,6 +16,8 @@ import { UploadsModule } from './modules/uploads/uploads.module';
 import { NewsModule } from './modules/news/news.module';
 import { ChatbotModule } from './modules/chatbot/chatbot.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { SettingsModule } from './modules/settings/settings.module';
+import { LookupsModule } from './modules/lookups/lookups.module';
 
 @Module({
   imports: [
@@ -35,6 +37,8 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     NewsModule,
     ChatbotModule,
     NotificationsModule,
+    SettingsModule,
+    LookupsModule,
   ],
   controllers: [AppController],
   providers: [

@@ -11,7 +11,5 @@ export abstract class ProgramRepository {
   abstract update(id: string, dto: UpdateProgramDto): Promise<Program>;
   abstract delete(id: string): Promise<void>;
   abstract existsBySlug(slug: string): Promise<boolean>;
-  abstract linkUniversities(programId: string, universityIds: string[]): Promise<Program>;
-  abstract unlinkUniversities(programId: string, universityIds: string[]): Promise<Program>;
   abstract findByUniversityId(universityId: string): Promise<Program[]>;
 }

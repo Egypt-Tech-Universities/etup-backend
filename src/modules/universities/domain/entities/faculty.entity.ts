@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { University } from './university.entity';
 import { Department } from './department.entity';
+import { Program } from '../../../programs/domain/entities/program.entity';
 
 @Entity('faculties')
 export class Faculty {
@@ -41,6 +42,9 @@ export class Faculty {
 
   @OneToMany(() => Department, (dept) => dept.faculty, { cascade: true })
   departments: Department[];
+
+  @OneToMany(() => Program, (program) => program.faculty)
+  programs: Program[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
