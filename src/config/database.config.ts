@@ -10,8 +10,10 @@ export const getDatabaseConfig = (
   username: configService.get<string>('DB_USERNAME'),
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_NAME'),
+  entities: [__dirname + '/../**/*.entity.{js,ts}'],
   autoLoadEntities: true,
   synchronize: configService.get<string>('NODE_ENV') !== 'production',
   logging: configService.get<string>('NODE_ENV') !== 'production' ? ['error', 'warn'] : ['error'],
   maxQueryExecutionTime: 1000,
 });
+
