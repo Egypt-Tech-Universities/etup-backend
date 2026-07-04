@@ -10,16 +10,19 @@ export class AppController {
 
   @Public()
   @Get()
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Health check / welcome' })
-  getHello(): string {
-    return this.appService.getHello();
+  getHello(): { status: string; message: string } {
+    return {
+      status: 'ok',
+      message: this.appService.getHello(),
+    };
   }
 
   @Public()
   @Get('favicon.ico')
   @HttpCode(HttpStatus.NO_CONTENT)
   favicon(): void {
-    // Ignore favicon requests
     return;
   }
 }
