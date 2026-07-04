@@ -9,11 +9,8 @@ import { TransformInterceptor } from './shared/interceptors/transform.intercepto
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // 1) Enable CORS (allow multiple origins from env, fallback localhost:5173)
-  const corsOrigins = process.env.CORS_ORIGINS
-    ? process.env.CORS_ORIGINS.split(',').map((o) => o.trim())
-    : ['http://localhost:5173'];
-  app.enableCors({ origin: corsOrigins, credentials: true });
+  // 1) Enable CORS - Simplified to allow all origins for health checks
+  app.enableCors({ origin: '*', credentials: false });
 
   // 2) Serve static files from 'uploads' folder
   app.useStaticAssets(path.join(process.cwd(), 'uploads'), {
@@ -33,11 +30,15 @@ async function bootstrap() {
   setupSwagger(app);
 
   // 6) Start server
-  const port = process.env.PORT || 8000;
+  const port = process.env.PORT || 8080;
   await app.listen(port, '0.0.0.0');
 
   console.log(`🚀 Server running on: http://localhost:${port}`);
   console.log(`📚 Swagger docs: http://localhost:${port}/api/docs`);
   console.log(`📁 Uploads: http://localhost:${port}/uploads`);
 }
-bootstrap();
+
+bootstrap().catch((err) => {
+  console.error('❌ Failed to start application:', err);
+  process.exit(1);
+});
