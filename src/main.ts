@@ -9,8 +9,13 @@ import { TransformInterceptor } from './shared/interceptors/transform.intercepto
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // 1) Enable CORS - Simplified to allow all origins for health checks
-  app.enableCors({ origin: '*', credentials: false });
+  // 1) Enable CORS - Completely open for all origins during testing
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: false,
+    allowedHeaders: 'Content-Type,Authorization',
+  });
 
   // 2) Serve static files from 'uploads' folder
   app.useStaticAssets(path.join(process.cwd(), 'uploads'), {
@@ -42,3 +47,4 @@ bootstrap().catch((err) => {
   console.error('❌ Failed to start application:', err);
   process.exit(1);
 });
+
